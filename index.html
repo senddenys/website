@@ -550,7 +550,6 @@
             transform: translateY(-50%);
             background: none;
             border: none;
-            font-size: 2.5rem;
             cursor: pointer;
             z-index: 10;
             transition: all 0.3s;
@@ -560,13 +559,22 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            padding: 0;
+        }
+
+        .carousel-nav svg {
+            width: 24px;
+            height: 24px;
         }
 
         body.before .carousel-nav {
-            color: #ffff00;
             background: #ff00ff;
             border: 3px solid #00ffff;
             animation: navBounce 1s infinite;
+        }
+
+        body.before .carousel-nav svg {
+            fill: #ffff00;
         }
 
         @keyframes navBounce {
@@ -575,16 +583,22 @@
         }
 
         body.after .carousel-nav {
-            color: #1a1a2e;
             background: #ffffff;
             border: 2px solid #e0e0e0;
         }
 
+        body.after .carousel-nav svg {
+            fill: #1a1a2e;
+        }
+
         body.after .carousel-nav:hover {
             background: #000000;
-            color: #ffffff;
             border-color: #000000;
             transform: translateY(-50%) scale(1.1);
+        }
+
+        body.after .carousel-nav:hover svg {
+            fill: #ffffff;
         }
 
         .carousel-prev {
@@ -799,7 +813,9 @@
 
         body.before .bouncing-bug {
             opacity: 1;
-            animation: bugBounce 5s infinite ease-in-out;
+            animation: bugBounce 8s infinite ease-in-out;
+            pointer-events: auto;
+            cursor: pointer;
         }
 
         @keyframes bugBounce {
@@ -825,6 +841,54 @@
             }
         }
 
+        /* Exploded bugs */
+        .exploded-bug {
+            position: fixed;
+            font-size: 40px;
+            z-index: 9999;
+            pointer-events: auto;
+            cursor: pointer;
+            animation: explodeAndFly 1s ease-out forwards;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        body.after .exploded-bug {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes explodeAndFly {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--explode-x), var(--explode-y)) scale(1) rotate(var(--explode-rotate));
+                opacity: 1;
+            }
+        }
+
+        /* Flying animation for exploded bugs */
+        .exploded-bug.flying {
+            animation: bugFly 6s infinite ease-in-out;
+        }
+
+        @keyframes bugFly {
+            0%, 100% {
+                transform: translate(var(--fly-start-x), var(--fly-start-y)) rotate(0deg);
+            }
+            25% {
+                transform: translate(calc(var(--fly-start-x) + 100px), calc(var(--fly-start-y) - 80px)) rotate(90deg);
+            }
+            50% {
+                transform: translate(calc(var(--fly-start-x) - 80px), calc(var(--fly-start-y) + 100px)) rotate(180deg);
+            }
+            75% {
+                transform: translate(calc(var(--fly-start-x) + 120px), calc(var(--fly-start-y) + 60px)) rotate(270deg);
+            }
+        }
+
         /* Marching Cockroaches Row */
         .cockroach-row {
             position: fixed;
@@ -841,6 +905,41 @@
         body.before .cockroach-row {
             opacity: 1;
         }
+
+        /* Scatter animation when switching to after */
+        body.after .cockroach-row {
+            opacity: 1;
+            animation: none !important;
+        }
+
+        body.after .cockroach {
+            animation: scatter 0.6s ease-out forwards !important;
+        }
+
+        body.after .cockroach:nth-child(1) { animation-delay: 0s !important; }
+        body.after .cockroach:nth-child(2) { animation-delay: 0.05s !important; }
+        body.after .cockroach:nth-child(3) { animation-delay: 0.1s !important; }
+        body.after .cockroach:nth-child(4) { animation-delay: 0.15s !important; }
+        body.after .cockroach:nth-child(5) { animation-delay: 0.2s !important; }
+        body.after .cockroach:nth-child(6) { animation-delay: 0.25s !important; }
+
+        @keyframes scatter {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--scatter-x), var(--scatter-y)) rotate(var(--scatter-rotate)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .cockroach:nth-child(1) { --scatter-x: -200px; --scatter-y: -150px; --scatter-rotate: -720deg; }
+        .cockroach:nth-child(2) { --scatter-x: 150px; --scatter-y: -200px; --scatter-rotate: 540deg; }
+        .cockroach:nth-child(3) { --scatter-x: -180px; --scatter-y: 180px; --scatter-rotate: -900deg; }
+        .cockroach:nth-child(4) { --scatter-x: 220px; --scatter-y: 160px; --scatter-rotate: 630deg; }
+        .cockroach:nth-child(5) { --scatter-x: -150px; --scatter-y: -180px; --scatter-rotate: -810deg; }
+        .cockroach:nth-child(6) { --scatter-x: 180px; --scatter-y: -160px; --scatter-rotate: 720deg; }
 
         @keyframes marchRight {
             0% {
@@ -903,7 +1002,7 @@
 </head>
 <body class="before">
     <!-- Bouncing Bug -->
-    <div class="bouncing-bug">🐛</div>
+    <div class="bouncing-bug" onclick="explodeBug(event)">🐛</div>
     
     <!-- Cockroach Row -->
     <div class="cockroach-row">
@@ -938,7 +1037,7 @@
     <div class="container">
         <!-- Hero Section -->
         <section class="hero">
-            <h1>DENYS</h1>
+            <h1>DENYS KOVALEVSKYI</h1>
             <p>QA Tester • Bug Destroyer • Team Player</p>
         </section>
 
@@ -990,8 +1089,16 @@
         <section class="testimonials">
             <h2>Testimonials</h2>
             <div class="testimonial-carousel">
-                <button class="carousel-nav carousel-prev" onclick="previousTestimonial()">‹</button>
-                <button class="carousel-nav carousel-next" onclick="nextTestimonial()">›</button>
+                <button class="carousel-nav carousel-prev" onclick="previousTestimonial()">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    </svg>
+                </button>
+                <button class="carousel-nav carousel-next" onclick="nextTestimonial()">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                    </svg>
+                </button>
                 
                 <div class="testimonial-track">
                     <div class="testimonial-slides">
@@ -1037,6 +1144,88 @@
             const body = document.body;
             body.classList.toggle('before');
             body.classList.toggle('after');
+            
+            // If switching to "after" state, reset the main bug
+            if (body.classList.contains('after')) {
+                const mainBug = document.querySelector('.bouncing-bug');
+                if (mainBug) {
+                    mainBug.style.opacity = '0';
+                }
+            }
+            
+            // If switching back to "before" state, remove all exploded bugs and reset main bug
+            if (body.classList.contains('before')) {
+                // Remove all exploded bugs
+                const explodedBugs = document.querySelectorAll('.exploded-bug');
+                explodedBugs.forEach(bug => bug.remove());
+                
+                // Reset main bug to visible
+                const mainBug = document.querySelector('.bouncing-bug');
+                if (mainBug) {
+                    mainBug.style.opacity = '';
+                }
+            }
+        }
+
+        // Bug explosion on click
+        function explodeBug(event) {
+            event.stopPropagation();
+            const bug = event.currentTarget;
+            const rect = bug.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Hide original bug temporarily
+            bug.style.opacity = '0';
+            
+            // Create 12 exploded bugs
+            const bugCount = 12;
+            const bugEmojis = ['🐛', '🐜', '🦗', '🪲', '🐞', '🪳'];
+            
+            for (let i = 0; i < bugCount; i++) {
+                const explodedBug = document.createElement('div');
+                explodedBug.className = 'exploded-bug';
+                explodedBug.textContent = bugEmojis[Math.floor(Math.random() * bugEmojis.length)];
+                explodedBug.style.left = centerX + 'px';
+                explodedBug.style.top = centerY + 'px';
+                
+                // Random explosion direction
+                const angle = (i / bugCount) * 360;
+                const distance = 200 + Math.random() * 100;
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
+                const rotate = Math.random() * 720 - 360;
+                
+                explodedBug.style.setProperty('--explode-x', x + 'px');
+                explodedBug.style.setProperty('--explode-y', y + 'px');
+                explodedBug.style.setProperty('--explode-rotate', rotate + 'deg');
+                
+                // Set flying animation start position
+                explodedBug.style.setProperty('--fly-start-x', x + 'px');
+                explodedBug.style.setProperty('--fly-start-y', y + 'px');
+                
+                // Make new bugs clickable too
+                explodedBug.onclick = explodeBug;
+                
+                document.body.appendChild(explodedBug);
+                
+                // After explosion animation, start flying
+                setTimeout(() => {
+                    explodedBug.classList.add('flying');
+                }, 1000);
+            }
+            
+            // Remove original bug if it's an exploded one
+            if (bug.classList.contains('exploded-bug')) {
+                setTimeout(() => {
+                    bug.remove();
+                }, 100);
+            } else {
+                // Show original bug again
+                setTimeout(() => {
+                    bug.style.opacity = '1';
+                }, 500);
+            }
         }
 
         // Testimonial Carousel
