@@ -1042,6 +1042,8 @@
         // Testimonial Carousel
         let currentTestimonial = 0;
         const totalTestimonials = 3;
+        let carouselInterval;
+        let isHovering = false;
 
         function updateCarousel() {
             const slides = document.querySelector('.testimonial-slides');
@@ -1073,8 +1075,33 @@
             updateCarousel();
         }
 
+        function startCarousel() {
+            carouselInterval = setInterval(() => {
+                if (!isHovering) {
+                    nextTestimonial();
+                }
+            }, 7000);
+        }
+
+        function stopCarousel() {
+            clearInterval(carouselInterval);
+        }
+
+        // Pause carousel on hover
+        function setupCarouselHover() {
+            const carousel = document.querySelector('.testimonial-carousel');
+            
+            carousel.addEventListener('mouseenter', () => {
+                isHovering = true;
+            });
+            
+            carousel.addEventListener('mouseleave', () => {
+                isHovering = false;
+            });
+        }
+
         // Auto-advance carousel every 7 seconds
-        setInterval(nextTestimonial, 7000);
+        startCarousel();
 
         // Cockroach march control - every 30 seconds
         let cockroachRow = null;
@@ -1107,6 +1134,9 @@
             
             // Start cockroach march control
             startCockroachMarch();
+            
+            // Setup carousel hover pause
+            setupCarouselHover();
         });
     </script>
 </body>
