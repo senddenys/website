@@ -409,6 +409,232 @@
             100% { transform: rotate(360deg) scale(1); }
         }
 
+        /* Testimonials Section */
+        .testimonials {
+            margin: 100px 0;
+        }
+
+        .testimonials h2 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 60px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        body.before .testimonials h2 {
+            color: #ffff00;
+            transform: scale(1.2) rotate(-5deg);
+            text-decoration: underline overline;
+            animation: pulse 1s infinite;
+        }
+
+        body.after .testimonials h2 {
+            color: #1a1a2e;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Carousel Container */
+        .testimonial-carousel {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .testimonial-track {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-slides {
+            display: flex;
+            transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .testimonial-card {
+            min-width: 100%;
+            padding: 50px 40px;
+            border-radius: 24px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        body.before .testimonial-card {
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+            border: 5px dotted #ffff00;
+            transform: skew(-2deg);
+            animation: testimonialShake 2s infinite;
+        }
+
+        @keyframes testimonialShake {
+            0%, 100% { transform: skew(-2deg) rotate(0deg); }
+            25% { transform: skew(2deg) rotate(1deg); }
+            50% { transform: skew(-2deg) rotate(-1deg); }
+            75% { transform: skew(2deg) rotate(1deg); }
+        }
+
+        body.after .testimonial-card {
+            background: #ffffff;
+            border: 2px solid #e8ecef;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            min-height: 120px;
+        }
+
+        body.before .testimonial-text {
+            color: #000000;
+            font-weight: 700;
+            text-shadow: 2px 2px #ffff00;
+            animation: colorFlicker 1s infinite;
+        }
+
+        @keyframes colorFlicker {
+            0%, 100% { color: #000000; }
+            50% { color: #ff00ff; }
+        }
+
+        body.after .testimonial-text {
+            color: #333333;
+            font-style: italic;
+        }
+
+        body.after .testimonial-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: #e0e0e0;
+            line-height: 0;
+            position: absolute;
+            top: 30px;
+            left: 25px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+
+        body.before .testimonial-author {
+            color: #ffff00;
+            text-decoration: underline wavy #ff00ff;
+        }
+
+        body.after .testimonial-author {
+            color: #1a1a2e;
+        }
+
+        .testimonial-role {
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        body.before .testimonial-role {
+            color: #00ffff;
+            font-weight: 700;
+        }
+
+        body.after .testimonial-role {
+            color: #666666;
+        }
+
+        /* Carousel Navigation */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        body.before .carousel-nav {
+            color: #ffff00;
+            background: #ff00ff;
+            border: 3px solid #00ffff;
+            animation: navBounce 1s infinite;
+        }
+
+        @keyframes navBounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.2) rotate(180deg); }
+        }
+
+        body.after .carousel-nav {
+            color: #1a1a2e;
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+        }
+
+        body.after .carousel-nav:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 0;
+        }
+
+        .carousel-next {
+            right: 0;
+        }
+
+        /* Carousel Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        body.before .carousel-dot {
+            background: #00ffff;
+            border: 2px solid #ff00ff;
+        }
+
+        body.before .carousel-dot.active {
+            background: #ffff00;
+            transform: scale(1.5);
+        }
+
+        body.after .carousel-dot {
+            background: #e0e0e0;
+        }
+
+        body.after .carousel-dot.active {
+            background: #000000;
+            transform: scale(1.3);
+        }
+
+        body.after .carousel-dot:hover {
+            background: #666666;
+        }
+
         /* Contact Section */
         .contact {
             text-align: center;
@@ -713,7 +939,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <h1>DENYS</h1>
-            <p>QA Tester • Bug Destroyer • Perfectionist</p>
+            <p>QA Tester • Bug Destroyer • Team Player</p>
         </section>
 
         <!-- Stats Section -->
@@ -760,6 +986,41 @@
             </div>
         </section>
 
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <h2>Testimonials</h2>
+            <div class="testimonial-carousel">
+                <button class="carousel-nav carousel-prev" onclick="previousTestimonial()">‹</button>
+                <button class="carousel-nav carousel-next" onclick="nextTestimonial()">›</button>
+                
+                <div class="testimonial-track">
+                    <div class="testimonial-slides">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">I had the pleasure of working with Denys, where he proved himself as a truly dependable and detail-oriented Test Engineer.</p>
+                            <div class="testimonial-author">Bohdana</div>
+                            <div class="testimonial-role">Project Manager</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">He showed a strong product mindset by not only focusing on finding defects, but also actively participating in requirements testing and providing valuable feedback early in the process.</p>
+                            <div class="testimonial-author">Kateryna</div>
+                            <div class="testimonial-role">Business Analyst</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">His genuine commitment to delivering value and continuously improving testing practices are top-notch.</p>
+                            <div class="testimonial-author">Andrii</div>
+                            <div class="testimonial-role">Software Engineer</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-dots">
+                    <button class="carousel-dot active" onclick="goToTestimonial(0)"></button>
+                    <button class="carousel-dot" onclick="goToTestimonial(1)"></button>
+                    <button class="carousel-dot" onclick="goToTestimonial(2)"></button>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact Section -->
         <section class="contact">
             <h2>Get In Touch</h2>
@@ -777,6 +1038,43 @@
             body.classList.toggle('before');
             body.classList.toggle('after');
         }
+
+        // Testimonial Carousel
+        let currentTestimonial = 0;
+        const totalTestimonials = 3;
+
+        function updateCarousel() {
+            const slides = document.querySelector('.testimonial-slides');
+            const dots = document.querySelectorAll('.carousel-dot');
+            
+            slides.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+            
+            dots.forEach((dot, index) => {
+                if (index === currentTestimonial) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+            updateCarousel();
+        }
+
+        function previousTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+            updateCarousel();
+        }
+
+        function goToTestimonial(index) {
+            currentTestimonial = index;
+            updateCarousel();
+        }
+
+        // Auto-advance carousel every 7 seconds
+        setInterval(nextTestimonial, 7000);
 
         // Cockroach march control - every 30 seconds
         let cockroachRow = null;
