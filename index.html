@@ -344,12 +344,15 @@ currentTestimonial * 100
                     const jump = 150 + Math.random() * 120;
                     let newX = rect.left + (dx / dist) * jump;
                     let newY = rect.top + (dy / dist) * jump;
-                    newX = Math.max(10, Math.min(window.innerWidth - rect.width - 10, newX));
-                    newY = Math.max(10, Math.min(window.innerHeight - rect.height - 10, newY));
+                    const minX = 10, maxX = window.innerWidth - rect.width - 10;
+                    const minY = 10, maxY = window.innerHeight - rect.height - 10;
+                    const clampedX = Math.max(minX, Math.min(maxX, newX));
+                    const clampedY = Math.max(minY, Math.min(maxY, newY));
+                    if (clampedX !== newX) { newX = Math.max(minX, Math.min(maxX, rect.left - (dx / dist) * jump)); }
+                    if (clampedY !== newY) { newY = Math.max(minY, Math.min(maxY, rect.top - (dy / dist) * jump)); }
                     btn.style.left = newX + 'px';
                     btn.style.top = newY + 'px';
-}
-);
+                });
 }
 )();
 }
