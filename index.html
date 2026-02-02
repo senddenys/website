@@ -312,11 +312,12 @@ currentTestimonial * 100
             cockroachRow = document.querySelector('.cockroach-row');
             function march() {
                 if (document.body.classList.contains('before')) {
+                    cockroachRow.style.top = (8 + Math.random() * 72) + '%';
                     cockroachRow.style.animation = 'none';
                     cockroachRow.offsetHeight;
                     cockroachRow.style.animation = 'marchRight 10s linear';
-}
-}
+                }
+            }
             setTimeout(march, 2000);
             setInterval(march, 30000);
 }
