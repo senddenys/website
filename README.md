@@ -1,7 +1,5 @@
 # Hi, I'm Denys Kovalevskyi 👋
 
-QA Tester looking for opportunities.
-
 Made this page with vibe coding for fun and job hunting.
 
 Check out the "Before/After" toggle - it shows what happens when QA isn't involved! 🐛
