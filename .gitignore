@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups
+*.backup*
+*.bak
+*~
+
+# Dependencies & build (якщо колись з’являться)
+node_modules/
+vendor/
+.cache/
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# IDE / env
+.idea/
+.vscode/
+*.local
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
