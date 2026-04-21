@@ -1098,8 +1098,9 @@ body.after .certificates h2 {
 .cert-bento-item img {
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain;
     display:block;
+    background-color:#ffffff;
     transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)
 }
 
