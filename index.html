@@ -11,25 +11,29 @@
       gtag('js', new Date());
       gtag('config', 'G-GDS7YCX90D');
     </script>
-    <title>Denys - QA Tester</title>
+    <title>Denys Kovalevskyi - QA Tester Portfolio</title>
+    <meta name="description" content="Portfolio of Denys Kovalevskyi, an experienced QA Tester who helps teams ship stable releases faster. View skills, experience, and certificates.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Denys Kovalevskyi - QA Tester Portfolio">
+    <meta property="og:description" content="Portfolio of Denys Kovalevskyi, an experienced QA Tester who helps teams ship stable releases faster. View skills, experience, and certificates.">
+    <meta property="og:image" content="/og-image.jpg">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐛</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="styles.css">
 </head>
 <body class="before">
-    <!-- Report Bug Button -->
     <button class="report-bug-btn" id="reportBugBtn">🦟 Report Bug</button>
-
     <!-- Bouncing Bug -->
     <div class="bouncing-bug" onclick="explodeBug(event)">🐛</div>
-    
-    <!-- Cockroach Row -->
-    <div class="cockroach-row">
-        <span class="cockroach">🦟</span>
-        <span class="cockroach">🦟</span>
-        <span class="cockroach">🦟</span>
-        <span class="cockroach">🦟</span>
-        <span class="cockroach">🦟</span>
-        <span class="cockroach">🦟</span>
+    <div class="bsod-screen" id="bsodScreen" aria-hidden="true">
+        <div class="bsod-content">
+            <p>: (</p>
+            <p>Your PC ran into a problem and needs to restart.</p>
+            <p>We're just collecting some error info, and then we'll restart for you.</p>
+            <p>100% complete</p>
+            <p>For more information about this issue and possible fixes, visit windows.com/stopcode</p>
+            <p>Stop code: QA_SIMULATED_BLUE_SCREEN</p>
+        </div>
     </div>
     
     <!-- Floating particles for after state -->
@@ -66,6 +70,7 @@
         <section class="hero">
             <h1>DENYS KOVALEVSKYI</h1>
             <p>QA Tester • Bug Destroyer • Team Player</p>
+            <p class="hero-value">I help teams ship stable releases faster.</p>
         </section>
     </section>
 
@@ -203,6 +208,7 @@
                 <div class="cert-bento-item"><img src="certificates/cert7.jpg" alt="Scrum: Advanced"></div>
                 <div class="cert-bento-item"><img src="certificates/cert8.jpg" alt="Introduction to Critical Infrastructure Protection"></div>
                 <div class="cert-bento-item"><img src="certificates/cert9.jpg" alt="Certificate"></div>
+
                 
             
                 
@@ -225,166 +231,6 @@
         </section>
     </div>
 
-    <script>function toggleState() {
-            const body = document.body;
-            body.classList.toggle('before');
-            body.classList.toggle('after');
-            if (body.classList.contains('after')) {
-                const mainBug = document.querySelector('.bouncing-bug');
-                if (mainBug) {
-                    mainBug.style.opacity = '0';
-}
-}
-            if (body.classList.contains('before')) {
-                const explodedBugs = document.querySelectorAll('.exploded-bug');
-                explodedBugs.forEach(bug => bug.remove());
-                const mainBug = document.querySelector('.bouncing-bug');
-                if (mainBug) {
-                    mainBug.style.opacity = '';
-}
-}
-}
-        function explodeBug(event) {
-            event.stopPropagation();
-            const bug = event.currentTarget;
-            const rect = bug.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            bug.style.opacity = '0';
-            const bugCount = 12;
-            const bugEmojis = ['🦟', '🪳', '🪲', '🐜', '🦗', '🕷️', '🪰', '🦂'];
-            for (let i = 0; i < bugCount; i++) {
-                const explodedBug = document.createElement('div');
-                explodedBug.className = 'exploded-bug';
-                explodedBug.textContent = bugEmojis[Math.floor(Math.random() * bugEmojis.length)];
-                explodedBug.style.left = centerX + 'px';
-                explodedBug.style.top = centerY + 'px';
-                const angle = (i / bugCount) * 360;
-                const distance = 200 + Math.random() * 100;
-                const x = Math.cos(angle * Math.PI / 180) * distance;
-                const y = Math.sin(angle * Math.PI / 180) * distance;
-                const rotate = Math.random() * 720 - 360;
-                explodedBug.style.setProperty('--explode-x', x + 'px');
-                explodedBug.style.setProperty('--explode-y', y + 'px');
-                explodedBug.style.setProperty('--explode-rotate', rotate + 'deg');
-                explodedBug.style.setProperty('--fly-start-x', x + 'px');
-                explodedBug.style.setProperty('--fly-start-y', y + 'px');
-                explodedBug.onclick = explodeBug;
-                document.body.appendChild(explodedBug);
-                setTimeout(() => {
-                    explodedBug.classList.add('flying');
-}
-, 1000);
-}
-            if (bug.classList.contains('exploded-bug')) {
-                setTimeout(() => {
-                    bug.remove();
-}
-, 100);
-}
- else {
-                setTimeout(() => {
-                    bug.style.opacity = '1';
-}
-, 500);
-}
-}
-        let currentTestimonial = 0;
-        const totalTestimonials = 4;
-        let carouselInterval;
-        let isHovering = false;
-        function updateCarousel() {
-            const slides = document.querySelector('.testimonial-slides');
-            const dots = document.querySelectorAll('.carousel-dot');
-            if (!slides) return;
-            slides.style.transform = 'translateX(-' + (currentTestimonial * 100) + '%)';
-            dots.forEach(function(dot, index) {
-                if (index === currentTestimonial) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-        function nextTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
-            updateCarousel();
-        }
-        function previousTestimonial() {
-            currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
-            updateCarousel();
-        }
-        function goToTestimonial(index) {
-            currentTestimonial = index;
-            updateCarousel();
-        }
-        function startCarousel() {
-            carouselInterval = setInterval(function() {
-                if (!isHovering) nextTestimonial();
-            }, 7000);
-        }
-        function stopCarousel() {
-            clearInterval(carouselInterval);
-        }
-        function setupCarouselHover() {
-            const carousel = document.querySelector('.testimonial-carousel');
-            if (carousel) {
-                carousel.addEventListener('mouseenter', function() { isHovering = true; });
-                carousel.addEventListener('mouseleave', function() { isHovering = false; });
-            }
-        }
-        setupCarouselHover();
-        startCarousel();
-        let cockroachRow = null;
-        function startCockroachMarch() {
-            cockroachRow = document.querySelector('.cockroach-row');
-            function march() {
-                if (document.body.classList.contains('before')) {
-                    cockroachRow.style.top = (8 + Math.random() * 72) + '%';
-                    cockroachRow.style.animation = 'none';
-                    cockroachRow.offsetHeight;
-                    cockroachRow.style.animation = 'marchRight 10s linear';
-                }
-            }
-            setTimeout(march, 2000);
-            setInterval(march, 30000);
-}
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelector('.hero').style.opacity = '0';
-            setTimeout(() => {
-                document.querySelector('.hero').style.opacity = '1';
-}
-, 100);
-            startCockroachMarch();
-            setupCarouselHover();
-            (function() {
-                const btn = document.getElementById('reportBugBtn');
-                btn.style.left = (window.innerWidth - 160) + 'px';
-                btn.style.top = (window.innerHeight - 80) + 'px';
-                btn.style.right = 'auto';
-                btn.style.bottom = 'auto';
-                btn.addEventListener('mouseenter', function(e) {
-                    const rect = btn.getBoundingClientRect();
-                    const cx = rect.left + rect.width / 2;
-                    const cy = rect.top + rect.height / 2;
-                    const dx = cx - e.clientX;
-                    const dy = cy - e.clientY;
-                    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                    const jump = 150 + Math.random() * 120;
-                    let newX = rect.left + (dx / dist) * jump;
-                    let newY = rect.top + (dy / dist) * jump;
-                    const minX = 10, maxX = window.innerWidth - rect.width - 10;
-                    const minY = 10, maxY = window.innerHeight - rect.height - 10;
-                    const clampedX = Math.max(minX, Math.min(maxX, newX));
-                    const clampedY = Math.max(minY, Math.min(maxY, newY));
-                    if (clampedX !== newX) { newX = Math.max(minX, Math.min(maxX, rect.left - (dx / dist) * jump)); }
-                    if (clampedY !== newY) { newY = Math.max(minY, Math.min(maxY, rect.top - (dy / dist) * jump)); }
-                    btn.style.left = newX + 'px';
-                    btn.style.top = newY + 'px';
-                });
-}
-)();
-}
-);</script>
+    <script src="main.js"></script>
 </body>
 </html>
