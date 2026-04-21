@@ -119,6 +119,33 @@ function setupCarouselHover() {
   });
 }
 
+function setupCarouselSwipe() {
+  const carousel = document.querySelector(".testimonial-carousel");
+  if (!carousel) return;
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  carousel.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+
+  carousel.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, {passive: true});
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold) {
+      nextTestimonial();
+    }
+    if (touchEndX > touchStartX + swipeThreshold) {
+      previousTestimonial();
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const hero = document.querySelector(".hero");
   if (hero) {
@@ -129,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   setupCarouselHover();
+  setupCarouselSwipe();
   startCarousel();
 
   const btn = document.getElementById("reportBugBtn");
