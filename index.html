@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GDS7YCX90D"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -11,226 +10,257 @@
       gtag('js', new Date());
       gtag('config', 'G-GDS7YCX90D');
     </script>
-    <title>Denys Kovalevskyi - QA Tester Portfolio</title>
-    <meta name="description" content="Portfolio of Denys Kovalevskyi, an experienced QA Tester who helps teams ship stable releases faster. View skills, experience, and certificates.">
+    <title>Denys Kovalevskyi — QA Tester Portfolio</title>
+    <meta name="description" content="Portfolio of Denys Kovalevskyi, an experienced QA Tester who helps teams ship stable releases faster.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Denys Kovalevskyi - QA Tester Portfolio">
-    <meta property="og:description" content="Portfolio of Denys Kovalevskyi, an experienced QA Tester who helps teams ship stable releases faster. View skills, experience, and certificates.">
+    <meta property="og:title" content="Denys Kovalevskyi — QA Tester Portfolio">
+    <meta property="og:description" content="Portfolio of Denys Kovalevskyi, an experienced QA Tester who helps teams ship stable releases faster.">
     <meta property="og:image" content="/og-image.jpg">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐛</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/bug-icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/bug-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="before">
-    <button class="report-bug-btn" id="reportBugBtn">🦟 Report Bug</button>
-    <!-- Bouncing Bug -->
-    <div class="bouncing-bug" onclick="explodeBug(event)">🐛</div>
-    <div class="bsod-screen" id="bsodScreen" aria-hidden="true">
-        <div class="bsod-content">
-            <p>: (</p>
-            <p>Your PC ran into a problem and needs to restart.</p>
-            <p>We're just collecting some error info, and then we'll restart for you.</p>
-            <p>100% complete</p>
-            <p>For more information about this issue and possible fixes, visit windows.com/stopcode</p>
-            <p>Stop code: QA_SIMULATED_BLUE_SCREEN</p>
+<body>
+    <div class="preloader" id="preloader" aria-hidden="true">
+        <div class="preloader-logo">
+            <img src="assets/bug-icon.png" alt="" class="logo-bug" width="48" height="48">
         </div>
-    </div>
-    
-    <!-- Floating particles for after state -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
     </div>
 
-    <!-- Sticky Nav -->
-    <header class="sticky-nav">
-        <nav class="nav-links">
-            <a href="#skills">Skills</a>
-            <a href="#education">Education</a>
-            <a href="#testimonials">Testimonials</a>
-            <a href="#certificates">Certificates</a>
-            <a href="#contact">Contact</a>
+    <header class="site-header">
+        <a href="#" class="logo-mark" aria-label="Denys Kovalevskyi — home">
+            <img src="assets/bug-icon.png" alt="" class="logo-bug" width="36" height="36">
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="#skills"><span class="nav-text">Skills</span></a>
+            <a href="#certificates"><span class="nav-text">Certificates</span></a>
+            <a href="#about"><span class="nav-text">About</span></a>
+            <a href="#contact"><span class="nav-text">Contact</span></a>
         </nav>
-        <div class="toggle-container" onclick="toggleState()" role="button" tabindex="0" aria-label="Switch between Before Denys and After Denys view" onkeydown="if(event.key==='Enter'||event.key===' ')toggleState()">
-            <span class="toggle-label">Before Denys </span>
-            <div class="toggle-switch"></div>
-            <span class="toggle-label">After Denys</span>
-        </div>
     </header>
 
-    <!-- Hero Section (full-width) -->
-    <section class="hero-section">
-        <section class="hero">
-            <h1>DENYS KOVALEVSKYI</h1>
-            <p>QA Tester • Bug Destroyer • Team Player</p>
-            <p class="hero-value">I help teams ship stable releases faster.</p>
-        </section>
-    </section>
-
-    <div class="container">
-        <!-- Stats Section -->
-        <section class="stats">
-            <div class="stat-card">
-                <span class="stat-number">500+</span>
-                <span class="stat-label">Bugs Found</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">100+</span>
-                <span class="stat-label">Product Improvements</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">3+</span>
-                <span class="stat-label">Years of Experience</span>
+    <main id="main">
+        <section class="hero" aria-label="Hero">
+            <div class="bugs-arena" id="bugsArena" aria-hidden="true"></div>
+            <div class="hero-text">
+                <h1>Hi!</h1>
+                <p class="hero-intro">I'm Denys. I break software before your users do.</p>
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section class="skills" id="skills">
-            <h2>Skills</h2>
-            <div class="skill-groups">
-                <div class="skill-group">
-                    <h3 class="skill-group-title">Testing</h3>
-                    <div class="skill-list">
-                        <div class="skill-tag">Manual Testing</div>
-                        <div class="skill-tag">Web Testing</div>
-                        <div class="skill-tag">Mobile Testing</div>
-                        <div class="skill-tag">Regression Testing</div>
-                        <div class="skill-tag">Exploratory Testing</div>
-                        <div class="skill-tag">Functional Testing</div>
-                        <div class="skill-tag">End-2-End Testing</div>
-                        <div class="skill-tag">API Testing</div>
-                    </div>
+        <section class="section about-section" id="about" aria-label="About">
+            <div class="section-inner">
+                <div class="section-head">
+                    <h2>About</h2>
+                    <p class="section-desc">I'm a detail-oriented QA Tester with 3+ years of experience. I find bugs, improve product quality, and help teams ship stable releases — through manual testing, API checks, and exploratory sessions.</p>
                 </div>
-                <div class="skill-group">
-                    <h3 class="skill-group-title">Tools</h3>
-                    <div class="skill-list">
-                        <div class="skill-tag">Swagger</div>
-                        <div class="skill-tag">Insomnia</div>
-                        <div class="skill-tag">Postman</div>
-                        <div class="skill-tag">Burp Suite</div>
-                        <div class="skill-tag">DevTools</div>
-                        <div class="skill-tag">Android Studio</div>
-                        <div class="skill-tag">LetsView</div>
-                        <div class="skill-tag">Jira</div>
-                        <div class="skill-tag">Git</div>
-                        <div class="skill-tag">SQL</div>
-                        <div class="skill-tag">NoSQL</div>
-                    </div>
+            </div>
+        </section>
+
+        <section class="section impact-section" aria-label="Impact">
+            <div class="section-inner">
+                <div class="section-head">
+                    <h2>Impact</h2>
                 </div>
-                <div class="skill-group">
-                    <h3 class="skill-group-title">Process</h3>
-                    <div class="skill-list">
-                        <div class="skill-tag">Agile</div>
-                        <div class="skill-tag">Scrum</div>
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-num">500+</span>
+                        <span class="stat-label">Bugs Found</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">100+</span>
+                        <span class="stat-label">Product Improvements</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">3+</span>
+                        <span class="stat-label">Years Experience</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Education Section -->
-        <section class="education" id="education">
-            <h2>Education</h2>
-            <div class="education-card">
-                <div class="education-year">2024</div>
-                <div class="education-university">Kharkiv National University of Radioelectronics</div>
-                <div class="education-programme">Educational programme: Quality Assurance</div>
+        <section class="section skills-section" id="skills" aria-label="Skills">
+            <div class="section-inner">
+                <div class="section-head">
+                    <h2>Skills</h2>
+                </div>
+                <div class="skill-cards">
+                    <article class="skill-card">
+                        <h3>Testing</h3>
+                        <div class="skill-tags">
+                            <div class="skill-tags-row">
+                                <span>Manual Testing</span>
+                                <span>Web Testing</span>
+                                <span>Mobile Testing</span>
+                                <span>Functional Testing</span>
+                                <span>Regression</span>
+                                <span>Exploratory</span>
+                                <span>API Testing</span>
+                                <span>End-to-End</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="skill-card">
+                        <h3>Tools</h3>
+                        <div class="skill-tags">
+                            <div class="skill-tags-row">
+                                <span>Postman</span>
+                                <span>Swagger</span>
+                                <span>Insomnia</span>
+                                <span>Playwright</span>
+                                <span>Jira</span>
+                                <span>DevTools</span>
+                                <span>Burp Suite</span>
+                                <span>Android Studio</span>
+                                <span>LetsView</span>
+                                <span>Git</span>
+                                <span>SQL</span>
+                                <span>NoSQL</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="skill-card">
+                        <h3>Process</h3>
+                        <div class="skill-tags">
+                            <div class="skill-tags-row">
+                                <span>Agile</span>
+                                <span>Scrum</span>
+                                <span>Scrumban</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 
-        <!-- Testimonials Section -->
-        <section class="testimonials" id="testimonials">
-            <h2>Testimonials</h2>
-            <div class="testimonial-carousel">
-                <button class="carousel-nav carousel-prev" onclick="previousTestimonial()">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-                    </svg>
-                </button>
-                <button class="carousel-nav carousel-next" onclick="nextTestimonial()">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                    </svg>
-                </button>
-                
-                <div class="testimonial-track">
-                    <div class="testimonial-slides">
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">I had the pleasure of working with Denys, where he proved himself as a truly dependable and detail-oriented Test Engineer.</p>
-                            <div class="testimonial-author">Bohdana</div>
-                            <div class="testimonial-role">Project Manager</div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">He showed a strong product mindset by not only focusing on finding defects, but also actively participating in requirements testing and providing valuable feedback early in the process.</p>
-                            <div class="testimonial-author">Kateryna</div>
-                            <div class="testimonial-role">Business Analyst</div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">His genuine commitment to delivering value and continuously improving testing practices are top-notch.</p>
-                            <div class="testimonial-author">Andrii</div>
-                            <div class="testimonial-role">Software Engineer</div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">He had a deep understanding of the domain and was always ready to help users solve issues related to the system.</p>
-                            <div class="testimonial-author">Eugene</div>
-                            <div class="testimonial-role">Software Developer</div>
+        <section class="section certs-section" id="certificates" aria-label="Certificates">
+            <div class="section-inner">
+                <div class="section-head">
+                    <h2>Certificates</h2>
+                    <div class="section-head-meta">
+                        <div class="carousel-controls">
+                            <button class="carousel-btn" id="certPrev" aria-label="Previous certificate">
+                                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                            </button>
+                            <span class="carousel-counter" id="certCounter">1/11</span>
+                            <button class="carousel-btn" id="certNext" aria-label="Next certificate">
+                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
-                
-                <div class="carousel-dots">
-                    <button class="carousel-dot active" onclick="goToTestimonial(0)"></button>
-                    <button class="carousel-dot" onclick="goToTestimonial(1)"></button>
-                    <button class="carousel-dot" onclick="goToTestimonial(2)"></button>
-                    <button class="carousel-dot" onclick="goToTestimonial(3)"></button>
+                <div class="cert-carousel">
+                    <div class="cert-track" id="certTrack">
+                        <div class="cert-slide">
+                            <h3>API Testing Path</h3>
+                            <div class="cert-image"><img src="certificates/cert1.jpg" alt="API Testing Path"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Software Testing Fundamentals</h3>
+                            <div class="cert-image"><img src="certificates/cert2.jpg" alt="Software Testing Fundamentals for ISTQB Exams Prep"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Mastering Test Management</h3>
+                            <div class="cert-image"><img src="certificates/cert3.jpg" alt="Mastering Test Management and Tools"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Essential Testing Techniques</h3>
+                            <div class="cert-image"><img src="certificates/cert4.jpg" alt="Essential Testing Techniques in Software Development"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>API Documentation Path</h3>
+                            <div class="cert-image"><img src="certificates/cert5.jpg" alt="API Documentation Learning Path"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>DevOps Foundations</h3>
+                            <div class="cert-image"><img src="certificates/cert6.jpg" alt="DevOps Foundations: Continuous Delivery / Continuous Integration"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Scrum: Advanced</h3>
+                            <div class="cert-image"><img src="certificates/cert7.jpg" alt="Scrum: Advanced"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Critical Infrastructure Protection</h3>
+                            <div class="cert-image"><img src="certificates/cert8.jpg" alt="Introduction to Critical Infrastructure Protection"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Quality Assurance Certificate</h3>
+                            <div class="cert-image"><img src="certificates/cert9.jpg" alt="Quality Assurance Certificate"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Anthropic Certificate</h3>
+                            <div class="cert-image"><img src="certificates/cert10.jpg" alt="Anthropic Certificate"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Prometheus Certificate</h3>
+                            <div class="cert-image"><img src="certificates/cert11.jpg" alt="Prometheus Certificate"></div>
+                        </div>
+                        <div class="cert-slide">
+                            <h3>Master's Diploma</h3>
+                            <div class="cert-image"><img src="certificates/cert12.jpg" alt="Master's Diploma — Kharkiv National University of Radio Electronics, Quality Assurance"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-    </div>
 
-    <!-- Certificates Section (full-width, edge-to-edge scroll) -->
-    <section class="certificates-section" id="certificates">
-        <section class="certificates">
-            <h2>Certificates</h2>
-            <div class="cert-bento-grid">
-                <div class="cert-bento-item featured"><img src="certificates/cert1.jpg" alt="API Testing Path"></div>
-                <div class="cert-bento-item"><img src="certificates/cert2.jpg" alt="Software Testing Fundamentals for ISTQB Exams Prep"></div>
-                <div class="cert-bento-item"><img src="certificates/cert3.jpg" alt="Mastering Test Management and Tools"></div>
-                <div class="cert-bento-item"><img src="certificates/cert4.jpg" alt="Essential Testing Techniques in Software Development"></div>
-                <div class="cert-bento-item"><img src="certificates/cert5.jpg" alt="API Documentation Learning Path"></div>
-                <div class="cert-bento-item"><img src="certificates/cert6.jpg" alt="DevOps Foundations: Continuous Delivery / Continuous Integration"></div>
-                <div class="cert-bento-item"><img src="certificates/cert7.jpg" alt="Scrum: Advanced"></div>
-                <div class="cert-bento-item"><img src="certificates/cert8.jpg" alt="Introduction to Critical Infrastructure Protection"></div>
-                <div class="cert-bento-item"><img src="certificates/cert9.jpg" alt="Certificate"></div>
-                <div class="cert-bento-item"><img src="certificates/cert10.jpg" alt="Anthropic Certificate"></div>
-                <div class="cert-bento-item"><img src="certificates/cert11.jpg" alt="Prometheus Certificate"></div>
-                
-            
-                
-            
-                
+        <section class="section testimonials-section" id="testimonials" aria-label="Testimonials">
+            <div class="section-inner">
+                <div class="section-head">
+                    <h2>Testimonials</h2>
+                    <div class="section-head-meta">
+                        <div class="carousel-controls">
+                            <button class="carousel-btn" id="testPrev" aria-label="Previous testimonial">
+                                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                            </button>
+                            <span class="carousel-counter" id="testCounter">1/4</span>
+                            <button class="carousel-btn" id="testNext" aria-label="Next testimonial">
+                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-carousel">
+                    <div class="testimonial-track" id="testTrack">
+                        <blockquote class="testimonial-slide">
+                            <p>I had the pleasure of working with Denys, where he proved himself as a truly dependable and detail-oriented Test Engineer.</p>
+                            <footer><strong>Bohdana</strong> — Project Manager</footer>
+                        </blockquote>
+                        <blockquote class="testimonial-slide">
+                            <p>He showed a strong product mindset by not only focusing on finding defects, but also actively participating in requirements testing and providing valuable feedback early in the process.</p>
+                            <footer><strong>Kateryna</strong> — Business Analyst</footer>
+                        </blockquote>
+                        <blockquote class="testimonial-slide">
+                            <p>His genuine commitment to delivering value and continuously improving testing practices are top-notch.</p>
+                            <footer><strong>Andrii</strong> — Software Engineer</footer>
+                        </blockquote>
+                        <blockquote class="testimonial-slide">
+                            <p>He had a deep understanding of the domain and was always ready to help users solve issues related to the system.</p>
+                            <footer><strong>Eugene</strong> — Software Developer</footer>
+                        </blockquote>
+                    </div>
                 </div>
             </div>
         </section>
-    </section>
 
-    <div class="container">
-        <!-- Contact Section -->
-        <section class="contact" id="contact">
-            <h2>Get In Touch</h2>
-            <div class="contact-buttons">
-                <a href="mailto:senddenys@gmail.com" class="btn">Email</a>
-                <a href="https://t.me/Testuser001" class="btn" target="_blank">Telegram</a>
-                <a href="https://linkedin.com/in/denys-kovalevskyi-8031371b9" class="btn" target="_blank">LinkedIn</a>
+        <section class="section contact-section" id="contact" aria-label="Contact">
+            <div class="section-inner">
+                <h2>Get in touch</h2>
+                <div class="contact-links">
+                    <a href="mailto:senddenys@gmail.com">senddenys@gmail.com</a>
+                    <a href="https://t.me/Testuser001" target="_blank" rel="noopener">Telegram</a>
+                    <a href="https://linkedin.com/in/denys-kovalevskyi-8031371b9" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
             </div>
         </section>
-    </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Denys Kovalevskyi</p>
+    </footer>
 
     <script src="main.js"></script>
 </body>
