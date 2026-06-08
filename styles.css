@@ -164,7 +164,7 @@ img {
 }
 
 .section-desc {
-    max-width: 520px;
+    max-width: 640px;
     font-size: 1rem;
     line-height: 1.6;
     color: var(--muted);
@@ -180,8 +180,8 @@ img {
 
 @media (min-width: 768px) {
     .section-head {
-        grid-template-columns: minmax(180px, 1fr) minmax(280px, 1.4fr);
-        column-gap: clamp(24px, 5vw, 64px);
+        grid-template-columns: auto minmax(0, 1fr);
+        column-gap: clamp(24px, 4vw, 48px);
     }
 
     .section-head-meta {
