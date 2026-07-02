@@ -420,7 +420,7 @@ function initBugHunt() {
     }
   }
 
-  function handleEmailHover(e) {
+  function handleEmailHover() {
     if (!isHuntActive || bugsCaught.email) return;
 
     emailHoverCount++;

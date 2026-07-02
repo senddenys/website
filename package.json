@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "QA Tester Portfolio Website",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "lint:js": "eslint main.js",
     "lint:html": "htmlhint index.html",
