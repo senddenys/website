@@ -309,10 +309,295 @@ function initScrollReveal() {
   targets.forEach((el) => observer.observe(el));
 }
 
+function initBugHunt() {
+  const toggleBtn = document.getElementById("bugToggleBtn");
+  const huntBar = document.getElementById("bugHuntBar");
+  const scoreSpan = document.getElementById("bugHuntScore");
+  const exitBtn = document.getElementById("bugHuntExit");
+  const successDialog = document.getElementById("bugSuccessDialog");
+  const dialogCloseBtn = document.getElementById("dialogCloseBtn");
+  const dialogHireBtn = document.getElementById("dialogHireBtn");
+
+  const impactHeading = document.getElementById("impactHeading");
+  const contactEmail = document.getElementById("contactEmail");
+
+  if (!toggleBtn || !huntBar || !scoreSpan) return;
+
+  let isHuntActive = false;
+  let bugsCaught = {
+    email: false,
+    heading: false,
+    crawler: false
+  };
+
+  let emailHoverCount = 0;
+  let emailTranslateX = 0;
+  let emailTranslateY = 0;
+  let ghostCrawlerInterval = null;
+  let ghostCrawlerEl = null;
+
+  function createExplosion(x, y) {
+    const particleCount = 12;
+    for (let i = 0; i < particleCount; i++) {
+      const p = document.createElement("div");
+      p.className = "bug-particle";
+      p.style.left = `${x}px`;
+      p.style.top = `${y}px`;
+      
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = 40 + Math.random() * 80;
+      const tx = Math.cos(angle) * velocity;
+      const ty = Math.sin(angle) * velocity;
+      
+      p.style.setProperty("--tx", `${tx}px`);
+      p.style.setProperty("--ty", `${ty}px`);
+      
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 600);
+    }
+  }
+
+  function getScore() {
+    let count = 0;
+    if (bugsCaught.email) count++;
+    if (bugsCaught.heading) count++;
+    if (bugsCaught.crawler) count++;
+    return count;
+  }
+
+  function updateScore() {
+    const score = getScore();
+    scoreSpan.textContent = `Found: ${score} / 3`;
+    if (score === 3) {
+      setTimeout(() => {
+        if (successDialog) {
+          successDialog.showModal();
+        }
+      }, 500);
+    }
+  }
+
+  function toggleHunt(forceState) {
+    isHuntActive = forceState !== undefined ? forceState : !isHuntActive;
+
+    if (isHuntActive) {
+      toggleBtn.classList.add("active");
+      toggleBtn.querySelector(".bug-toggle-text").textContent = "Bug Hunt: ON";
+      huntBar.classList.add("active");
+      huntBar.setAttribute("aria-hidden", "false");
+      startBugs();
+    } else {
+      toggleBtn.classList.remove("active");
+      toggleBtn.querySelector(".bug-toggle-text").textContent = "Bug Hunt: OFF";
+      huntBar.classList.remove("active");
+      huntBar.setAttribute("aria-hidden", "true");
+      stopBugs();
+      if (successDialog) successDialog.close();
+    }
+  }
+
+  function setupEmailBug() {
+    if (bugsCaught.email) return;
+
+    const wrapper = contactEmail.parentElement;
+    if (wrapper && !wrapper.querySelector(".bug-target")) {
+      wrapper.classList.add("bug-active");
+      const bug = document.createElement("img");
+      bug.src = "assets/bug-icon.png";
+      bug.alt = "Email bug";
+      bug.className = "bug-target bug-red";
+      bug.title = "Fix runaway email";
+      bug.style.position = "absolute";
+      bug.style.left = "calc(50% + 140px)";
+      bug.style.top = "50%";
+      bug.style.transform = "translate(-50%, -50%)";
+      
+      bug.addEventListener("click", (evt) => {
+        evt.stopPropagation();
+        catchEmailBug(evt);
+      });
+      wrapper.appendChild(bug);
+    }
+  }
+
+  function handleEmailHover(e) {
+    if (!isHuntActive || bugsCaught.email) return;
+
+    emailHoverCount++;
+    const range = 80 + Math.min(emailHoverCount, 5) * 30;
+    emailTranslateX = (Math.random() - 0.5) * range;
+    emailTranslateY = (Math.random() - 0.5) * range;
+    contactEmail.style.transform = `translate(${emailTranslateX}px, ${emailTranslateY}px)`;
+  }
+
+  function catchEmailBug(evt) {
+    bugsCaught.email = true;
+    createExplosion(evt.clientX, evt.clientY);
+    contactEmail.style.transform = "none";
+    
+    const wrapper = contactEmail.parentElement;
+    if (wrapper) {
+      wrapper.classList.remove("bug-active");
+      const bug = wrapper.querySelector(".bug-target");
+      if (bug) bug.remove();
+    }
+    updateScore();
+  }
+
+  let headingBugEl = null;
+
+  function setupHeadingBug() {
+    if (bugsCaught.heading) return;
+
+    impactHeading.classList.add("rogue-bug-active");
+    
+    const headerDiv = impactHeading.parentElement;
+    if (headerDiv && !headerDiv.querySelector(".bug-target")) {
+      headingBugEl = document.createElement("img");
+      headingBugEl.src = "assets/bug-icon.png";
+      headingBugEl.alt = "Heading bug";
+      headingBugEl.className = "bug-target bug-red";
+      headingBugEl.title = "Fix title rotation";
+      headingBugEl.style.marginLeft = "16px";
+      headingBugEl.style.display = "inline-block";
+      headingBugEl.style.verticalAlign = "middle";
+
+      headingBugEl.addEventListener("click", (evt) => {
+        catchHeadingBug(evt);
+      });
+      headerDiv.appendChild(headingBugEl);
+    }
+  }
+
+  function catchHeadingBug(evt) {
+    bugsCaught.heading = true;
+    createExplosion(evt.clientX, evt.clientY);
+    impactHeading.classList.remove("rogue-bug-active");
+    if (headingBugEl) {
+      headingBugEl.remove();
+      headingBugEl = null;
+    }
+    updateScore();
+  }
+
+  function setupGhostCrawler() {
+    if (bugsCaught.crawler) return;
+
+    if (!ghostCrawlerEl) {
+      ghostCrawlerEl = document.createElement("img");
+      ghostCrawlerEl.src = "assets/bug-icon.png";
+      ghostCrawlerEl.alt = "Ghost bug";
+      ghostCrawlerEl.className = "ghost-crawler bug-red";
+      ghostCrawlerEl.title = "Catch me!";
+      
+      ghostCrawlerEl.style.left = "-50px";
+      ghostCrawlerEl.style.top = `${150 + Math.random() * 300}px`;
+      
+      ghostCrawlerEl.addEventListener("click", (evt) => {
+        catchGhostCrawler(evt);
+      });
+      document.body.appendChild(ghostCrawlerEl);
+    }
+
+    moveGhostCrawler();
+    ghostCrawlerInterval = setInterval(moveGhostCrawler, 2500);
+  }
+
+  function moveGhostCrawler() {
+    if (!ghostCrawlerEl || bugsCaught.crawler) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    const nextLeft = 40 + Math.random() * (w - 120);
+    const nextTop = 100 + Math.random() * (h - 220);
+
+    const curLeft = parseFloat(ghostCrawlerEl.style.left) || 0;
+    const curTop = parseFloat(ghostCrawlerEl.style.top) || 0;
+
+    const angle = Math.atan2(nextTop - curTop, nextLeft - curLeft) * (180 / Math.PI) + 90;
+
+    ghostCrawlerEl.style.transform = `rotate(${angle}deg)`;
+    ghostCrawlerEl.style.left = `${nextLeft}px`;
+    ghostCrawlerEl.style.top = `${nextTop}px`;
+  }
+
+  function catchGhostCrawler(evt) {
+    bugsCaught.crawler = true;
+    createExplosion(evt.clientX, evt.clientY);
+    
+    if (ghostCrawlerEl) {
+      ghostCrawlerEl.remove();
+      ghostCrawlerEl = null;
+    }
+    if (ghostCrawlerInterval) {
+      clearInterval(ghostCrawlerInterval);
+      ghostCrawlerInterval = null;
+    }
+    updateScore();
+  }
+
+  function startBugs() {
+    emailHoverCount = 0;
+    bugsCaught = { email: false, heading: false, crawler: false };
+    updateScore();
+
+    contactEmail.addEventListener("mouseenter", handleEmailHover);
+    setupEmailBug();
+    setupHeadingBug();
+    setupGhostCrawler();
+  }
+
+  function stopBugs() {
+    contactEmail.removeEventListener("mouseenter", handleEmailHover);
+    contactEmail.style.transform = "none";
+    const emailWrapper = contactEmail.parentElement;
+    if (emailWrapper) {
+      emailWrapper.classList.remove("bug-active");
+      const emailBug = emailWrapper.querySelector(".bug-target");
+      if (emailBug) emailBug.remove();
+    }
+
+    impactHeading.classList.remove("rogue-bug-active");
+    if (headingBugEl) {
+      headingBugEl.remove();
+      headingBugEl = null;
+    }
+
+    if (ghostCrawlerEl) {
+      ghostCrawlerEl.remove();
+      ghostCrawlerEl = null;
+    }
+    if (ghostCrawlerInterval) {
+      clearInterval(ghostCrawlerInterval);
+      ghostCrawlerInterval = null;
+    }
+  }
+
+  toggleBtn.addEventListener("click", () => toggleHunt());
+  exitBtn.addEventListener("click", () => toggleHunt(false));
+
+  if (dialogCloseBtn && successDialog) {
+    dialogCloseBtn.addEventListener("click", () => successDialog.close());
+  }
+
+  if (dialogHireBtn && successDialog) {
+    dialogHireBtn.addEventListener("click", () => {
+      successDialog.close();
+      toggleHunt(false);
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initPreloader();
   initHeroBugs();
   initCarousel("certTrack", "certPrev", "certNext", "certCounter");
   initCarousel("testTrack", "testPrev", "testNext", "testCounter");
   initScrollReveal();
+  initBugHunt();
 });

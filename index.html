@@ -63,7 +63,7 @@
         <section class="section impact-section" aria-label="Impact">
             <div class="section-inner">
                 <div class="section-head">
-                    <h2>Impact</h2>
+                    <h2 id="impactHeading">Impact</h2>
                 </div>
                 <div class="stats-bar">
                     <div class="stat-item">
@@ -250,7 +250,9 @@
             <div class="section-inner">
                 <h2>Get in touch</h2>
                 <div class="contact-links">
-                    <a href="mailto:senddenys@gmail.com">senddenys@gmail.com</a>
+                    <div class="email-wrapper" style="position: relative; width: 100%; display: flex; justify-content: center;">
+                        <a href="mailto:senddenys@gmail.com" id="contactEmail">senddenys@gmail.com</a>
+                    </div>
                     <a href="https://t.me/Testuser001" target="_blank" rel="noopener">Telegram</a>
                     <a href="https://linkedin.com/in/denys-kovalevskyi-8031371b9" target="_blank" rel="noopener">LinkedIn</a>
                 </div>
@@ -261,6 +263,33 @@
     <footer class="site-footer">
         <p>&copy; 2025 Denys Kovalevskyi</p>
     </footer>
+
+    <!-- Bug Hunt UI Components -->
+    <div class="bug-hunt-bar" id="bugHuntBar" aria-hidden="true">
+        <div class="bug-hunt-bar-content">
+            <span class="bug-hunt-title">👾 BUG HUNT ACTIVE</span>
+            <span class="bug-hunt-score" id="bugHuntScore">Found: 0 / 3</span>
+        </div>
+        <button class="bug-hunt-exit" id="bugHuntExit" aria-label="Exit Bug Hunt Mode">×</button>
+    </div>
+
+    <button class="bug-toggle-btn" id="bugToggleBtn" aria-label="Toggle Bug Hunt Mode">
+        <span class="bug-toggle-icon">👾</span>
+        <span class="bug-toggle-text">Bug Hunt: OFF</span>
+    </button>
+
+    <dialog id="bugSuccessDialog" class="brutalist-dialog">
+        <div class="dialog-content">
+            <h2>🎉 EXCELLENT!</h2>
+            <p class="dialog-subtitle">All 3 intentional bugs resolved.</p>
+            <div class="dialog-badge">RANK: SENIOR QA TESTER</div>
+            <p class="dialog-desc">You've successfully debugged the website. Real bugs don't stand a chance with you on the team!</p>
+            <div class="dialog-actions">
+                <button id="dialogHireBtn" class="dialog-btn primary">Hire Denys</button>
+                <button id="dialogCloseBtn" class="dialog-btn secondary">Close</button>
+            </div>
+        </div>
+    </dialog>
 
     <script src="main.js"></script>
 </body>
