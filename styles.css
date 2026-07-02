@@ -924,7 +924,14 @@ img {
     box-shadow: 2px 2px 0 var(--black);
 }
 
-.contact-links .brutalist-btn {
+.contact-links a.brutalist-btn {
     border-radius: 999px;
     min-width: min(100%, 360px);
+    background: var(--black) !important;
+    color: var(--primary) !important;
+}
+
+.contact-links a.brutalist-btn:hover {
+    background: var(--white) !important;
+    color: var(--black) !important;
 }
