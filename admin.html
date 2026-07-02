@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Admin Panel — Denys Kovalevskyi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Embedded styling helper for admin dashboard */
+        .admin-container {
+            max-width: 500px;
+            margin: clamp(40px, 10vw, 80px) auto;
+            padding: 0 24px;
+        }
+        .admin-box {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: 8px 8px 0 var(--black);
+            padding: clamp(24px, 6vw, 40px);
+        }
+        .admin-box h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 24px;
+            border-bottom: var(--border);
+            padding-bottom: 12px;
+        }
+        .admin-form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .admin-form-group label {
+            font-family: var(--font-body);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+        .admin-input {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border: var(--border);
+            background: var(--white);
+            transition: box-shadow 0.1s;
+        }
+        .admin-input:focus {
+            outline: none;
+            box-shadow: 3px 3px 0 var(--black);
+        }
+        .admin-btn {
+            width: 100%;
+            padding: 14px 20px;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: var(--black);
+            color: var(--primary);
+            border: var(--border);
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s, background 0.2s, color 0.2s;
+            margin-top: 10px;
+        }
+        .admin-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--primary-dark);
+        }
+        .admin-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 var(--primary-dark);
+        }
+        .admin-btn.secondary {
+            background: transparent;
+            color: var(--black);
+            margin-top: 15px;
+        }
+        .admin-btn.secondary:hover {
+            box-shadow: 4px 4px 0 var(--black);
+            background: rgba(0,0,0,0.05);
+        }
+        .admin-message {
+            margin-top: 20px;
+            padding: 12px 16px;
+            border: var(--border);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+        }
+        .admin-message.error {
+            background: #ffccd5;
+            color: #b7092b;
+            display: block;
+        }
+        .admin-message.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .admin-dashboard {
+            display: none;
+        }
+        .admin-auth-screen {
+            display: block;
+        }
+        .admin-header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .admin-email-badge {
+            font-size: 0.85rem;
+            background: rgba(0,0,0,0.05);
+            padding: 4px 10px;
+            border: 1px solid var(--black);
+            font-weight: 500;
+        }
+        .upload-area {
+            border: 2px dashed var(--black);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            transition: background-color 0.2s;
+        }
+        .upload-area:hover {
+            background: rgba(255,255,255,0.8);
+        }
+        .upload-area p {
+            font-weight: 500;
+            margin-top: 8px;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 20px;
+            border: var(--border);
+            background: var(--white);
+            margin-bottom: 20px;
+            display: none;
+            position: relative;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--black);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .progress-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--black);
+            mix-blend-mode: difference;
+        }
+        .current-cv-info {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--black);
+            font-size: 0.95rem;
+        }
+        .current-cv-info a {
+            color: var(--black);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 32px;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.95rem;
+            color: var(--black);
+        }
+    </style>
+</head>
+<body class="loaded">
+    <div class="admin-container">
+        <!-- Auth Screen -->
+        <div id="authScreen" class="admin-box admin-auth-screen">
+            <h1>Admin Login</h1>
+            <form id="loginForm">
+                <div class="admin-form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="admin-input" required autocomplete="email">
+                </div>
+                <div class="admin-form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="admin-input" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="admin-btn">Log In</button>
+            </form>
+            <div id="authMessage" class="admin-message"></div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboardScreen" class="admin-box admin-dashboard">
+            <div class="admin-header-nav">
+                <span class="admin-email-badge" id="adminUserEmail">admin@domain.com</span>
+                <button id="logoutBtn" style="padding: 4px 10px; border: var(--border); background: transparent; font-weight: 700; cursor: pointer;">Sign Out</button>
+            </div>
+            <h1>Upload Resume</h1>
+            <form id="uploadForm">
+                <div class="upload-area" id="uploadArea">
+                    <span style="font-size: 2.5rem;">📄</span>
+                    <p id="fileLabel">Drag & drop CV PDF or click to browse</p>
+                    <input type="file" id="cvFileInput" accept=".pdf" style="display: none;">
+                </div>
+                <button type="submit" class="admin-btn" id="uploadBtn">Upload to Production</button>
+            </form>
+
+            <div class="progress-bar-container" id="progressBarContainer">
+                <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+
+            <div id="uploadMessage" class="admin-message"></div>
+
+            <div class="current-cv-info">
+                <strong>Current CV on Production:</strong><br>
+                <a href="#" id="previewCvLink" target="_blank" rel="noopener">Preview Current CV ↗</a>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-home">← Back to Portfolio</a>
+    </div>
+
+    <!-- Firebase App & Services from CDN -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+        // Firebase Configuration Placeholder.
+        // Replace this object with your actual keys from Firebase Console
+        const firebaseConfig = {
+            apiKey: "PLACEHOLDER_API_KEY",
+            authDomain: "PLACEHOLDER_AUTH_DOMAIN",
+            projectId: "PLACEHOLDER_PROJECT_ID",
+            storageBucket: "PLACEHOLDER_STORAGE_BUCKET",
+            messagingSenderId: "PLACEHOLDER_MESSAGING_SENDER_ID",
+            appId: "PLACEHOLDER_APP_ID"
+        };
+
+        const isFirebasePlaceholder = firebaseConfig.apiKey.startsWith("PLACEHOLDER_");
+
+        let auth, storage;
+        if (!isFirebasePlaceholder) {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            storage = getStorage(app);
+        }
+
+        const authScreen = document.getElementById("authScreen");
+        const dashboardScreen = document.getElementById("dashboardScreen");
+        const loginForm = document.getElementById("loginForm");
+        const authMessage = document.getElementById("authMessage");
+        const adminUserEmail = document.getElementById("adminUserEmail");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        const uploadForm = document.getElementById("uploadForm");
+        const cvFileInput = document.getElementById("cvFileInput");
+        const uploadArea = document.getElementById("uploadArea");
+        const fileLabel = document.getElementById("fileLabel");
+        const uploadBtn = document.getElementById("uploadBtn");
+        const progressBarContainer = document.getElementById("progressBarContainer");
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
+        const uploadMessage = document.getElementById("uploadMessage");
+        const previewCvLink = document.getElementById("previewCvLink");
+
+        // Helper to show message
+        function showMsg(el, text, isError) {
+            el.textContent = text;
+            el.className = `admin-message ${isError ? 'error' : 'success'}`;
+        }
+
+        function clearMsg(el) {
+            el.textContent = "";
+            el.className = "admin-message";
+        }
+
+        // Check if config missing
+        if (isFirebasePlaceholder) {
+            showMsg(authMessage, "Firebase is not configured yet! Please create a Firebase project and replace the credentials in admin.html.", true);
+            loginForm.querySelector("button").disabled = true;
+        } else {
+            // Monitor Auth State
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    authScreen.style.display = "none";
+                    dashboardScreen.style.display = "block";
+                    adminUserEmail.textContent = user.email;
+                    loadPreviewLink();
+                } else {
+                    authScreen.style.display = "block";
+                    dashboardScreen.style.display = "none";
+                }
+            });
+        }
+
+        // Login Handler
+        if (loginForm && auth) {
+            loginForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                clearMsg(authMessage);
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+
+                signInWithEmailAndPassword(auth, email, password)
+                    .catch(err => {
+                        showMsg(authMessage, `Auth Error: ${err.message}`, true);
+                    });
+            });
+        }
+
+        // Logout Handler
+        if (logoutBtn && auth) {
+            logoutBtn.addEventListener("click", () => {
+                signOut(auth);
+            });
+        }
+
+        // File browser trigger
+        uploadArea.addEventListener("click", () => cvFileInput.click());
+
+        // Drag & Drop
+        uploadArea.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = "rgba(255,255,255,0.9)";
+        });
+
+        uploadArea.addEventListener("dragleave", () => {
+            uploadArea.style.backgroundColor = "rgba(255,255,255,0.5)";
+        });
+
+        uploadArea.addEventListener("drop", (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = "rgba(255,255,255,0.5)";
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === "application/pdf") {
+                cvFileInput.files = files;
+                fileLabel.textContent = `Selected: ${files[0].name}`;
+            } else {
+                showMsg(uploadMessage, "Only PDF files are supported!", true);
+            }
+        });
+
+        cvFileInput.addEventListener("change", () => {
+            const files = cvFileInput.files;
+            if (files.length > 0) {
+                fileLabel.textContent = `Selected: ${files[0].name}`;
+            }
+        });
+
+        // Load preview link
+        function loadPreviewLink() {
+            if (!storage) return;
+            const cvRef = ref(storage, "resumes/latest_resume.pdf");
+            getDownloadURL(cvRef)
+                .then(url => {
+                    previewCvLink.href = url;
+                    previewCvLink.style.display = "inline-block";
+                })
+                .catch(() => {
+                    previewCvLink.removeAttribute("href");
+                    previewCvLink.textContent = "No CV uploaded yet";
+                });
+        }
+
+        // File Upload
+        if (uploadForm && storage) {
+            uploadForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                clearMsg(uploadMessage);
+
+                const file = cvFileInput.files[0];
+                if (!file) {
+                    showMsg(uploadMessage, "Please select a PDF file first!", true);
+                    return;
+                }
+
+                if (file.type !== "application/pdf") {
+                    showMsg(uploadMessage, "Only PDF files are allowed!", true);
+                    return;
+                }
+
+                // Storage reference at resumes/latest_resume.pdf
+                const cvRef = ref(storage, "resumes/latest_resume.pdf");
+                const uploadTask = uploadBytesResumable(cvRef, file);
+
+                progressBarContainer.style.display = "block";
+                uploadBtn.disabled = true;
+
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        progressBar.style.width = `${progress}%`;
+                        progressText.textContent = `${Math.round(progress)}%`;
+                    },
+                    (error) => {
+                        showMsg(uploadMessage, `Upload failed: ${error.message}`, true);
+                        progressBarContainer.style.display = "none";
+                        uploadBtn.disabled = false;
+                    },
+                    () => {
+                        showMsg(uploadMessage, "Resume successfully uploaded to production!", false);
+                        progressBarContainer.style.display = "none";
+                        uploadBtn.disabled = false;
+                        fileLabel.textContent = "Drag & drop CV PDF or click to browse";
+                        uploadForm.reset();
+                        loadPreviewLink();
+                    }
+                );
+            });
+        }
+    </script>
+</body>
+</html>

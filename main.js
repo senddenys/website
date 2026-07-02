@@ -593,6 +593,45 @@ function initBugHunt() {
   }
 }
 
+function initDynamicResume() {
+  const downloadCvBtn = document.getElementById("downloadCvBtn");
+  if (!downloadCvBtn) return;
+
+  const firebaseConfig = {
+    apiKey: "PLACEHOLDER_API_KEY",
+    authDomain: "PLACEHOLDER_AUTH_DOMAIN",
+    projectId: "PLACEHOLDER_PROJECT_ID",
+    storageBucket: "PLACEHOLDER_STORAGE_BUCKET",
+    messagingSenderId: "PLACEHOLDER_MESSAGING_SENDER_ID",
+    appId: "PLACEHOLDER_APP_ID"
+  };
+
+  const isFirebasePlaceholder = firebaseConfig.apiKey.startsWith("PLACEHOLDER_");
+
+  if (isFirebasePlaceholder) {
+    downloadCvBtn.href = "assets/resume.pdf";
+    return;
+  }
+
+  import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js")
+    .then(({ initializeApp }) => {
+      return import("https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js")
+        .then(({ getStorage, ref, getDownloadURL }) => {
+          const app = initializeApp(firebaseConfig);
+          const storage = getStorage(app);
+          const cvRef = ref(storage, "resumes/latest_resume.pdf");
+          return getDownloadURL(cvRef);
+        });
+    })
+    .then(url => {
+      downloadCvBtn.href = url;
+    })
+    .catch(err => {
+      console.warn("Firebase Storage CV load skipped or failed. Falling back to local file. Error:", err.message);
+      downloadCvBtn.href = "assets/resume.pdf";
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initPreloader();
   initHeroBugs();
@@ -600,4 +639,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initCarousel("testTrack", "testPrev", "testNext", "testCounter");
   initScrollReveal();
   initBugHunt();
+  initDynamicResume();
 });
