@@ -1,0 +1,15 @@
+{
+  "name": "denys-website",
+  "version": "1.0.0",
+  "description": "QA Tester Portfolio Website",
+  "main": "main.js",
+  "scripts": {
+    "lint:js": "eslint main.js",
+    "lint:html": "htmlhint index.html",
+    "lint": "npm run lint:js && npm run lint:html"
+  },
+  "devDependencies": {
+    "eslint": "^9.6.0",
+    "htmlhint": "^1.1.4"
+  }
+}
