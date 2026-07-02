@@ -598,12 +598,13 @@ function initDynamicResume() {
   if (!downloadCvBtn) return;
 
   const firebaseConfig = {
-    apiKey: "PLACEHOLDER_API_KEY",
-    authDomain: "PLACEHOLDER_AUTH_DOMAIN",
-    projectId: "PLACEHOLDER_PROJECT_ID",
-    storageBucket: "PLACEHOLDER_STORAGE_BUCKET",
-    messagingSenderId: "PLACEHOLDER_MESSAGING_SENDER_ID",
-    appId: "PLACEHOLDER_APP_ID"
+    apiKey: "AIzaSyAEp4JA2EEKYds5uccoKbLzCVQ4_GHSUUA",
+    authDomain: "senddenys-website.firebaseapp.com",
+    projectId: "senddenys-website",
+    storageBucket: "senddenys-website.firebasestorage.app",
+    messagingSenderId: "61010732620",
+    appId: "1:61010732620:web:5299f5597b923fc8ce36e9",
+    measurementId: "G-861J897JNZ"
   };
 
   const isFirebasePlaceholder = firebaseConfig.apiKey.startsWith("PLACEHOLDER_");
