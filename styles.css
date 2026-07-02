@@ -923,3 +923,8 @@ img {
     transform: translate(2px, 2px);
     box-shadow: 2px 2px 0 var(--black);
 }
+
+.contact-links .brutalist-btn {
+    border-radius: 999px;
+    min-width: min(100%, 360px);
+}
