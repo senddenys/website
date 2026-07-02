@@ -12,7 +12,8 @@ export default [
         setTimeout: "readonly",
         requestAnimationFrame: "readonly",
         gtag: "readonly",
-        dataLayer: "readonly"
+        dataLayer: "readonly",
+        IntersectionObserver: "readonly"
       }
     },
     rules: {
