@@ -593,46 +593,6 @@ function initBugHunt() {
   }
 }
 
-function initDynamicResume() {
-  const downloadCvBtn = document.getElementById("downloadCvBtn");
-  if (!downloadCvBtn) return;
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAEp4JA2EEKYds5uccoKbLzCVQ4_GHSUUA",
-    authDomain: "senddenys-website.firebaseapp.com",
-    projectId: "senddenys-website",
-    storageBucket: "senddenys-website.firebasestorage.app",
-    messagingSenderId: "61010732620",
-    appId: "1:61010732620:web:5299f5597b923fc8ce36e9",
-    measurementId: "G-861J897JNZ"
-  };
-
-  const isFirebasePlaceholder = firebaseConfig.apiKey.startsWith("PLACEHOLDER_");
-
-  if (isFirebasePlaceholder) {
-    downloadCvBtn.href = "assets/resume.pdf";
-    return;
-  }
-
-  import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js")
-    .then(({ initializeApp }) => {
-      return import("https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js")
-        .then(({ getStorage, ref, getDownloadURL }) => {
-          const app = initializeApp(firebaseConfig);
-          const storage = getStorage(app);
-          const cvRef = ref(storage, "resumes/latest_resume.pdf");
-          return getDownloadURL(cvRef);
-        });
-    })
-    .then(url => {
-      downloadCvBtn.href = url;
-    })
-    .catch(err => {
-      console.warn("Firebase Storage CV load skipped or failed. Falling back to local file. Error:", err.message);
-      downloadCvBtn.href = "assets/resume.pdf";
-    });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   initPreloader();
   initHeroBugs();
@@ -640,5 +600,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initCarousel("testTrack", "testPrev", "testNext", "testCounter");
   initScrollReveal();
   initBugHunt();
-  initDynamicResume();
 });
